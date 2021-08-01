@@ -2,6 +2,7 @@ package com.example.paperuser.user.service;
 
 import com.example.paperuser.user.domain.School;
 import com.example.paperuser.user.repository.SchoolRepository;
+import com.example.paperuser.user.service.helper.SchoolTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,20 +20,23 @@ class SchoolServiceTest {
     private SchoolRepository schoolRepository;
 
     private SchoolService schoolService;
+    private SchoolTestHelper schoolTestHelper;
 
     @BeforeEach
     void before() {
         this.schoolService = new SchoolService(schoolRepository);
+        this.schoolTestHelper = new SchoolTestHelper(this.schoolService);
     }
 
     @DisplayName("1. 학교를 생성한다.")
     @Test
     void save() {
-        School school = School.builder()
-                .name("test school")
-                .city("seoul")
-                .build();
-        schoolService.save(school);
+//        School school = School.builder()
+//                .name("test school")
+//                .city("seoul")
+//                .build();
+//        schoolService.save(school);
+        School school = this.schoolTestHelper.createSchool("test school", "seoul");
 
         var list = schoolRepository.findAll();
         assertEquals(1, list.size());
